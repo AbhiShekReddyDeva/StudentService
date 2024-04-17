@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package com.proto;
+option java_multiple_files = true;
+
+message AddressResponse
+{
+  string city = 1;
+  int32 pincode = 2;
+}
+message StudentResponse
+{
+  int32 rollNum =1;
+  string studentName =2;
+  int32 age =3;
+  AddressResponseList addresses =4;
+}
+message AddressResponseList
+{
+  repeated AddressResponse address = 1;
+}
+message NotificationsResponse
+{
+  int32 notificationId =1;
+  string  notificationType =2;
+  StudentResponse payload =3;
+  string createdOn =4;
+}
+message PageRequest
+{
+  int32 pageNum = 1;
+  int32 pageSize = 2;
+}
+message NotificationsResponseList {
+  repeated NotificationsResponse notifications = 1;
+}
+
+message NotificationRequest
+{
+  int32 notificationId =1 ;
+}
+message NotificationResponse
+{
+  int32 notificationId = 1;
+  string studentName = 2;
+}
+message SortRequest
+{
+  int32 pageNum = 1;
+  int32 pageSize = 2;
+  string sortField = 3;
+  string direction = 4;
+}
+service StudentNotificationService
+{
+  rpc getNotificationById(NotificationRequest) returns(NotificationResponse);
+  rpc getAllNotification(PageRequest) returns (NotificationsResponseList) {}
+  rpc getAllNotificationsWithSorting(SortRequest) returns(NotificationsResponseList){}
+}
